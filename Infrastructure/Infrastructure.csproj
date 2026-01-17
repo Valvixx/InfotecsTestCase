@@ -7,17 +7,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
-      <Folder Include="Models\" />
-      <Folder Include="Repository\" />
-      <Folder Include="Scripts\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Dapper" Version="2.1.66" />
       <PackageReference Include="FluentMigrator.Runner" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
       <PackageReference Include="Npgsql" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Scripts\Message\PostgresMessage.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>PostresMessage.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Scripts\Message\PostgresMessage.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PostgresMessage.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

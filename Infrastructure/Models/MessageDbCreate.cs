@@ -1,18 +1,12 @@
 using System.Text.Json.Serialization;
 
-namespace Domain.Entities;
+namespace Infrastructure.Models;
 
-public class Message
+public record class MessageDbCreate
 {
-    public int Id { get; set; }
-    [JsonPropertyName("_id")]
     public string DeviceName { get; set; } = string.Empty;
-    [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
-    [JsonPropertyName("startTime")]
     public DateTimeOffset StartTime { get; set; }
-    [JsonPropertyName("endTime")]
     public DateTimeOffset EndTime { get; set; }
-    [JsonPropertyName("version")]
     public string Version { get; set; } = string.Empty;
-}       
+}
