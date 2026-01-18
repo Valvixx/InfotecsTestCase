@@ -72,5 +72,17 @@ namespace Infrastructure.Scripts.Message {
                 return ResourceManager.GetString("Insert", resourceCulture);
             }
         }
+        
+        internal static string GetAllDevices {
+            get {
+                return ResourceManager.GetString("GetAllDevices", resourceCulture);
+            }
+        }
+        
+        internal static string GetAllMessagesByDeviceName {
+            get {
+                return ResourceManager.GetString("GetAllMessagesByDeviceName", resourceCulture);
+            }
+        }
     }
 }

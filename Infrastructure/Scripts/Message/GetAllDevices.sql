@@ -1,0 +1,1 @@
+SELECT device_name AS "DeviceName" FROM devices

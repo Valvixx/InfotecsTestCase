@@ -21,4 +21,10 @@
     <data name="Insert" type="System.Resources.ResXFileRef, System.Windows.Forms">
         <value>Insert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
     </data>
+    <data name="GetAllDevices" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>GetAllDevices.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    </data>
+    <data name="GetAllMessagesByDeviceName" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>GetAllMessagesByDeviceName.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    </data>
 </root>

@@ -21,7 +21,10 @@
       <EmbeddedResource Update="Scripts\Message\PostgresMessage.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>PostresMessage.Designer.cs</LastGenOutput>
+        <CustomToolNamespace>Infrastructure.Scripts.Message</CustomToolNamespace>
       </EmbeddedResource>
+      <None Remove="Scripts\Message\GetAllMessagesByDeviceName.sql" />
+      <EmbeddedResource Include="Scripts\Message\GetAllMessagesByDeviceName.sql" />
     </ItemGroup>
 
     <ItemGroup>
