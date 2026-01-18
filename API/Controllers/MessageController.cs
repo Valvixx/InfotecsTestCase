@@ -19,7 +19,7 @@ public class MessageController (IMessageService messageService) : Controller
     [HttpGet("all_devices")]
     public async Task<IActionResult> GetAllDevicesAsync()
     {
-        List<DeviceGet> devices = await messageService.GetAllDevicesAsync();
+        DevicesListGet devices = await messageService.GetAllDevicesAsync();
         return Ok(devices);
     }
 

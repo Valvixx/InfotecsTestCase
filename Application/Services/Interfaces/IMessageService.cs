@@ -7,6 +7,6 @@ namespace Application.Services.Interfaces;
 public interface IMessageService
 {
     Task CreateAsync(MessageCreate data);
-    Task<List<DeviceGet>> GetAllDevicesAsync();
+    Task<DevicesListGet> GetAllDevicesAsync();
     Task<List<MessageGet>> GetAllMessagesByDeviceNameAsync(string deviceName);
 }
