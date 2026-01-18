@@ -12,7 +12,7 @@ public class MessageService(IMessageRepository messageRepository):IMessageServic
         await messageRepository.CreateMessageAsync(new MessageDbCreate
         {
             DeviceName = data.DeviceName,
-            Name = data.Name,
+            SessionName = data.SessionName,
             StartTime = data.StartTime,
             EndTime = data.EndTime,
             Version = data.Version

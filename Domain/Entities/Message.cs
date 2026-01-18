@@ -8,7 +8,7 @@ public class Message
     [JsonPropertyName("_id")]
     public string DeviceName { get; set; } = string.Empty;
     [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
+    public string SessionName { get; set; } = string.Empty;
     [JsonPropertyName("startTime")]
     public DateTimeOffset StartTime { get; set; }
     [JsonPropertyName("endTime")]

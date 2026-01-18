@@ -11,12 +11,12 @@ public class M0001_InitialMigration : Migration
     {
         Create.Table("devices")
             .WithColumn("id").AsCustom("uuid").PrimaryKey().NotNullable()
-            .WithColumn("name").AsString(255).Unique().NotNullable();
+            .WithColumn("device_name").AsString(255).Unique().NotNullable();
 
         Create.Table("sessions")
             .WithColumn("id").AsCustom("uuid").PrimaryKey().NotNullable()
             .WithColumn("device_id").AsCustom("uuid").NotNullable()
-            .WithColumn("name").AsString(255).Nullable()
+            .WithColumn("session_name").AsString(255).Nullable()
             .WithColumn("start_time").AsDateTimeOffset().Nullable()
             .WithColumn("end_time").AsDateTimeOffset().Nullable()
             .WithColumn("version").AsString(50).Nullable();

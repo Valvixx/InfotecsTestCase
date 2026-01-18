@@ -4,9 +4,14 @@ namespace Application.DTO.Message;
 
 public class MessageCreate
 {
+    [JsonPropertyName("_id")]
     public string DeviceName { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
+    [JsonPropertyName("name")]
+    public string SessionName { get; set; } = string.Empty;
+    [JsonPropertyName("startTime")]
     public DateTimeOffset StartTime { get; set; }
+    [JsonPropertyName("endTime")]
     public DateTimeOffset EndTime { get; set; }
+    [JsonPropertyName("version")]
     public string Version { get; set; } = string.Empty;
 }
