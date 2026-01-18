@@ -3,6 +3,7 @@ using Infrastructure.Dapper;
 using Infrastructure.Dapper.Interfaces;
 using Infrastructure.Models;
 using Infrastructure.Repository.Interfaces;
+using Infrastructure.Scripts;
 using Infrastructure.Scripts.Message;
 
 namespace Infrastructure.Repository;
@@ -11,23 +12,16 @@ public class MessageRepository(IDapperContext dapperContext): IMessageRepository
 {
     public async Task<List<DeviceDbGet>> GetAllDevicesAsync()
     {
-        var query = new QueryObject("SELECT device_name AS \"DeviceName\" FROM devices", new {});
+        var query = new QueryObject(PostgresMessage.GetAllDevices, new {});
         return await dapperContext.ListOrEmpty<DeviceDbGet>(query) ?? new List<DeviceDbGet>();
     }
 
     public async Task<List<Message>> GetAllMessagesByDeviceNameAsync(string deviceName)
     {
-        var sql = "SELECT\n" +
-                  "    d.device_name AS \"DeviceName\",\n" +
-                  "    s.session_name AS \"SessionName\",\n" +
-                  "    s.start_time AS \"StartTime\",\n" +
-                  "    s.end_time AS \"EndTime\",\n" +
-                  "    s.version AS \"Version\"\n" +
-                  "FROM sessions s\nJOIN devices d ON s.device_id=d.id\n" +
-                  "WHERE d.device_name = @DeviceName;\n";
-        var query = new QueryObject(sql, new { DeviceName = deviceName });
+        var query = new QueryObject(PostgresMessage.GetAllMessagesByDeviceName, new { DeviceName = deviceName });
         return await dapperContext.ListOrEmpty<Message>(query) ?? new List<Message>();
     }
+
 
     public async Task CreateMessageAsync(MessageDbCreate data)
     {

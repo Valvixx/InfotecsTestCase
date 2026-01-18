@@ -1,1 +1,2 @@
-SELECT device_name AS "DeviceName" FROM devices
+SELECT device_name AS "DeviceName"
+FROM devices
