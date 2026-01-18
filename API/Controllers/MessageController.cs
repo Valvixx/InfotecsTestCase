@@ -7,7 +7,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/message")]
-public class MessageController (IMessageService messageService) : Controller
+public class MessageController (IMessageService messageService, Logger<MessageController> logger) : Controller
 {
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] MessageCreate messageCreate)
@@ -29,4 +29,5 @@ public class MessageController (IMessageService messageService) : Controller
         List<MessageGet> messages = await messageService.GetAllMessagesByDeviceNameAsync(deviceName);
         return Ok(messages);
     }
+
 }   

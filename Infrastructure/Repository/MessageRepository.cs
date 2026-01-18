@@ -1,9 +1,9 @@
+using System.Text.Json;
 using Domain.Entities;
 using Infrastructure.Dapper;
 using Infrastructure.Dapper.Interfaces;
 using Infrastructure.Models;
 using Infrastructure.Repository.Interfaces;
-using Infrastructure.Scripts;
 using Infrastructure.Scripts.Message;
 
 namespace Infrastructure.Repository;
@@ -22,20 +22,9 @@ public class MessageRepository(IDapperContext dapperContext): IMessageRepository
         return await dapperContext.ListOrEmpty<Message>(query) ?? new List<Message>();
     }
 
-
     public async Task CreateMessageAsync(MessageDbCreate data)
     {
         var query = new QueryObject(PostgresMessage.Insert, data);
         await dapperContext.Command<Message>(query);
-    }
-
-    public Task UpdateMessageAsync(Message message)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteMessageAsync(Message message)
-    {
-        throw new NotImplementedException();
     }
 }
