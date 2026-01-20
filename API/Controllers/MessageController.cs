@@ -7,7 +7,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/message")]
-public class MessageController (IMessageService messageService, Logger<MessageController> logger) : Controller
+public class MessageController (IMessageService messageService, ILogger<MessageController> logger) : Controller
 {
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] MessageCreate messageCreate)
