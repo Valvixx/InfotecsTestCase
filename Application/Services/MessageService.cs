@@ -1,5 +1,6 @@
 using Application.DTO.Message;
 using Application.Services.Interfaces;
+using Domain;
 using Domain.Entities;
 using Infrastructure.Models;
 using Infrastructure.Repository.Interfaces;
@@ -8,15 +9,30 @@ using Microsoft.Extensions.Logging;
 namespace Application.Services;
 
 public class MessageService(
-    IMessageRepository messageRepository, 
+    IMessageRepository messageRepository,
     ILogger<MessageService> logger) : IMessageService
 {
     public async Task CreateAsync(MessageCreate data)
     {
-        logger.LogInformation("Создание сообщения для устройства {DeviceName}", data.DeviceName);
-        
+        logger.LogInformation("Creating message for device {DeviceName}", data.DeviceName);
+
         try
         {
+            if (string.IsNullOrWhiteSpace(data.DeviceName))
+            {
+                throw new ValidationException("Device name cannot be null or empty.");
+            }
+
+            if (string.IsNullOrWhiteSpace(data.SessionName))
+            {
+                throw new ValidationException("Session name cannot be null or empty.");
+            }
+
+            if (data.StartTime > data.EndTime)
+            {
+                throw new ValidationException("Start time cannot be later than end time.");
+            }
+
             await messageRepository.CreateMessageAsync(new MessageDbCreate
             {
                 DeviceName = data.DeviceName,
@@ -25,47 +41,76 @@ public class MessageService(
                 EndTime = data.EndTime,
                 Version = data.Version
             });
-            
-            logger.LogInformation("Сообщение успешно создано для {DeviceName}", data.DeviceName);
+
+            logger.LogInformation("Message successfully created for {DeviceName}", data.DeviceName);
+        }
+        catch (ValidationException)
+        {
+            throw;
+        }
+        catch (NotFoundException)
+        {
+            throw;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка создания сообщения для {DeviceName}", data.DeviceName);
+            logger.LogError(ex, "Error creating message for {DeviceName}", data.DeviceName);
             throw;
         }
     }
 
     public async Task<DevicesListGet> GetAllDevicesAsync()
     {
-        logger.LogInformation("Запрос списка всех устройств");
-        
+        logger.LogInformation("Requesting list of all devices");
+
         try
         {
             List<DeviceDbGet> devices = await messageRepository.GetAllDevicesAsync();
-        
+
             var result = new DevicesListGet
             {
                 Devices = devices.Select(d => d.DeviceName).Distinct().ToList()
             };
-            
-            logger.LogInformation("Найдено {DeviceCount} уникальных устройств", result.Devices.Count);
+
+            logger.LogInformation("Found {DeviceCount} unique devices", result.Devices.Count);
             return result;
+        }
+        catch (ValidationException)
+        {
+            throw;
+        }
+        catch (NotFoundException)
+        {
+            throw;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка получения списка устройств");
+            logger.LogError(ex, "Error getting list of devices");
             throw;
         }
     }
 
     public async Task<List<MessageGet>> GetAllMessagesByDeviceNameAsync(string deviceName)
     {
-        logger.LogInformation("Запрос сообщений для устройства {DeviceName}", deviceName);
-        
+        logger.LogInformation("Requesting messages for device {DeviceName}", deviceName);
+
         try
         {
+            if (string.IsNullOrWhiteSpace(deviceName))
+            {
+                throw new ValidationException("Device name cannot be null or empty.");
+            }
+
             List<Message> messages = await messageRepository.GetAllMessagesByDeviceNameAsync(deviceName);
-            
+
             var result = messages
                 .Select(m => new MessageGet
                 {
@@ -76,14 +121,27 @@ public class MessageService(
                     Version = m.Version
                 })
                 .ToList();
-                
-            logger.LogInformation("Найдено {MessageCount} сообщений для {DeviceName}", 
+
+            logger.LogInformation("Found {MessageCount} messages for {DeviceName}",
                 result.Count, deviceName);
+
             return result;
+        }
+        catch (ValidationException)
+        {
+            throw;
+        }
+        catch (NotFoundException)
+        {
+            throw;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка получения сообщений для {DeviceName}", deviceName);
+            logger.LogError(ex, "Error getting messages for {DeviceName}", deviceName);
             throw;
         }
     }
